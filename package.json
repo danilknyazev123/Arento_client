@@ -1,0 +1,61 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.3",
+    "@testing-library/user-event": "^12.6.2",
+    "axios": "^1.6.5",
+    "babel-preset-react-app": "^10.0.1",
+    "bbcode-to-react": "^0.2.9",
+    "bootstrap": "^4.6.0",
+    "browser-image-compression": "^2.0.2",
+    "compressorjs": "^1.2.1",
+    "express": "^4.21.1",
+    "force": "^0.0.3",
+    "jwt-decode": "^3.1.2",
+    "mobx": "^6.0.5",
+    "mobx-react-lite": "^3.1.7",
+    "node": "^21.6.2",
+    "react": "^17.0.1",
+    "react-bootstrap": "^1.4.3",
+    "react-dom": "^17.0.1",
+    "react-imask": "^7.6.1",
+    "react-input-mask": "^2.0.4",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^5.0.1",
+    "react-yandex-maps": "^4.6.0",
+    "web-vitals": "^0.2.4"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browser": {
+    "fs": false
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+  }
+}
