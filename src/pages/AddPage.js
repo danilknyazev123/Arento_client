@@ -25,6 +25,7 @@ import AddPageImages from "../components/AddPageImages";
 import share from "../Assets/share.svg"
 import FormAddToStopListSuccessfully from "../components/modals/FormAddToStopListSuccessfully";
 import Loading from "../components/helpers/Loading";
+import Error from "../components/modals/Error";
 
 const AddMap = lazy(() => import('../maps/AddMap'));
 
@@ -36,6 +37,8 @@ const AddPage = observer(() => {
     const [formSolutionVisible, setSolutionVisible] = useState(false)
     const [formStopListVisible, setFormStopListVisible] = useState(false)
     const [loading, setLoading] = useState(true)
+    const [errorActive, setErrorActive] = useState(false)
+    const [alertText, setAlertText] = useState('')
 
     const {user} = useContext(Context)
     const {add} = useContext(Context)
@@ -50,7 +53,8 @@ const AddPage = observer(() => {
         el.style.fontSize = "25px"
         el.style.backgroundColor = "#3A3A3A"
         await navigator.clipboard.writeText(add1.phone)
-        alert('Телефон успешно скопирован в буфер обмена')
+        setAlertText('Телефон успешно скопирован в буфер обмена')
+        setErrorActive(true)
     }
 
     const StopAdd = async () => {
@@ -61,7 +65,8 @@ const AddPage = observer(() => {
 
     const CopyLink = async () => {
         await navigator.clipboard.writeText(link)
-        alert('Ссылка успешно скопирована в буфер обмена')
+        setAlertText('Ссылка успешно скопирована в буфер обмена')
+        setErrorActive(true)
     }
 
     const containerStyles = {
@@ -88,7 +93,8 @@ const AddPage = observer(() => {
                 const userData = await fetchOneUser(data.userId)
                 setUser1(userData)
             } catch (e) {
-                console.error("Ошибка при загрузке данных:", e);
+                setAlertText('Ошибка при загрузке данных')
+                setErrorActive(true)
             }
         };
         fetchData().then().finally(() => setLoading(false));
@@ -99,9 +105,11 @@ const AddPage = observer(() => {
             const formData = new FormData()
             formData.append('id', id)
             updateAdd(formData).then()
-            alert('Успешно!')
+            setAlertText('Успешно!')
+            setErrorActive(true)
         } catch (e) {
-            console.error("Ошибка:", e);
+            setAlertText('Непредвиденная ошибка')
+            setErrorActive(true)
         }
     }
 
@@ -109,7 +117,8 @@ const AddPage = observer(() => {
         try{
             window.open(`${add1.link}`, "_blank");
         } catch (e) {
-            console.error("Ошибка:", e);
+            setAlertText('Непредвиденная ошибка')
+            setErrorActive(true)
         }
     }
 
@@ -448,17 +457,10 @@ const AddPage = observer(() => {
                 <FormAuth show={formAuthVisible} onHide={() => setAuthVisible(false)}/>
                 <FormSolution id={id} show={formSolutionVisible} onHide={() => setSolutionVisible(false)}/>
                 <FormAddToStopListSuccessfully show={formStopListVisible} onHide={() => setFormStopListVisible(false)}/>
+                <Error alert={alertText} show={errorActive} onHide={() => setErrorActive(false)}/>
             </Container>
         </div>
     );
 });
 
 export default AddPage;
-
-/*
-{add1.info.map((info) =>
-    <li key={info.id}>
-        {info.title}: {info.description}
-    </li>
-)}
-* */

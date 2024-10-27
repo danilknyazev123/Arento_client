@@ -17,7 +17,7 @@ const PlaceItem = ({place}) => {
                         <div className="place-photo">
                             <img
                                 src={process.env.REACT_APP_API_URL + 'places/place' + place.id + '/' + place.photo1}
-                                alt="Фото для блога"
+                                alt="Фото интересного места №1"
                                 width={700}
                                 height={400}
                             />
@@ -25,7 +25,7 @@ const PlaceItem = ({place}) => {
                         <div className="place-photo">
                             <img
                                 src={process.env.REACT_APP_API_URL + 'places/place' + place.id + '/' + place.photo2}
-                                alt="Фото для блога"
+                                alt="Фото интересного места №2"
                                 width={700}
                                 height={400}
                             />

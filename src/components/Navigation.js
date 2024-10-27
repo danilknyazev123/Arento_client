@@ -10,6 +10,7 @@ import {ABOUT_US_ROUTE, BLOG_ROUTE, MAIN_ROUTE, PHOTO_GALLERY_ROUTE, PLACES_ROUT
 import PlaceNavItem from "./PlaceNavItem";
 
 import menu from "../Assets/menu.svg"
+import Error from "./modals/Error";
 
 const Navigation = observer(() => {
     let location = useLocation()
@@ -22,6 +23,9 @@ const Navigation = observer(() => {
 
     const [formSelectionVisible, setFormSelectionVisible] = useState(false)
     const [menuActive, setMenuActive] = useState(false);
+    const [errorActive, setErrorActive] = useState(false)
+    const [alertText, setAlertText] = useState('')
+
     const windowWidth = useRef(window.innerWidth)
     function clearActives(){
         for(let i = 0; i < list.length; i++){
@@ -70,7 +74,8 @@ const Navigation = observer(() => {
                     add.setPlaces(data.rows)
                 })
             } catch (error) {
-                console.error("Ошибка при загрузке данных:", error);
+                setAlertText('Ошибка при загрузке данных')
+                setErrorActive(true)
             }
         };
         fetchData().then()
@@ -168,6 +173,7 @@ const Navigation = observer(() => {
                     <FormSelection show={formSelectionVisible} onHide={() => setFormSelectionVisible(false)}/>
                 </Container>
             </Navbar>
+            <Error alert={alertText} show={errorActive} onHide={() => setErrorActive(false)}/>
             <BurgerMenu active={menuActive} setActive={setMenuActive}/>
         </>
     );

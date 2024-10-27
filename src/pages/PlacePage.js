@@ -24,7 +24,7 @@ const PlacePage = observer(() => {
                     add.setPlaces(data.rows)
                 })
             } catch (e) {
-                console.error("Ошибка при загрузке данных:", e);
+                alert("Ошибка при загрузке данных");
             }
         };
         fetchData().then()

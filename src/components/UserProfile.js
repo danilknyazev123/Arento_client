@@ -5,6 +5,7 @@ import {fetchOneUser} from "../http/addApi";
 import {Context} from "../index";
 import {Button} from "react-bootstrap";
 import {logout} from "../http/userApi";
+import Error from "./modals/Error";
 
 const UserProfile = () => {
     const {user} = useContext(Context)
@@ -12,6 +13,8 @@ const UserProfile = () => {
     const {id} = useParams()
 
     const [user1, setUser1] = useState([])
+    const [errorActive, setErrorActive] = useState(false)
+    const [alertText, setAlertText] = useState('')
 
     const windowWidth = useRef(window.innerWidth)
 
@@ -21,7 +24,8 @@ const UserProfile = () => {
                 const data = await fetchOneUser(id);
                 setUser1(data);
             } catch (error) {
-                console.error("Ошибка при загрузке данных:", error);
+                setAlertText('Ошибка при загрузке данных')
+                setErrorActive(true)
             }
         };
         fetchData().then();
@@ -79,6 +83,7 @@ const UserProfile = () => {
                     <></>
                 }
             </div>
+            <Error alert={alertText} show={errorActive} onHide={() => setErrorActive(false)}/>
         </>
     );
 };

@@ -27,7 +27,7 @@ $authHost.interceptors.request.use((config) => {
             localStorage.setItem('token', response.data.accessToken)
             return $authHost.request(originalRequest)
         } catch (e) {
-            console.log('Не авторизован')
+
         }
     }
     throw error

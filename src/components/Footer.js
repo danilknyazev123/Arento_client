@@ -3,12 +3,11 @@ import {Container} from "react-bootstrap";
 import {useLocation} from "react-router-dom";
 
 const Footer = () => {
-
     const href  = useLocation()
-    console.log(href.pathname)
+
     return (
         <>
-            <div className={href.pathname.slice(0,8) === "/profile" || href.pathname === "/blog" || href.pathname === "/places/history" ? "footer" : "footer_profile"}
+            <div className={href.pathname.slice(0,8) === "/profile" || href.pathname === "/blog" || href.pathname.slice(0,8) === "/places/" ? "footer" : "footer_profile"}
             >
                 <Container className="d-flex justify-content-center align-items-center">
                     <a

@@ -19,6 +19,7 @@ import {
 } from "../http/addApi";
 import CompressForm from "./modals/CompressForm";
 import {IMaskInput} from "react-imask";
+import Error from "./modals/Error";
 
 
 const AddCreateForm = observer(() => {
@@ -28,6 +29,8 @@ const AddCreateForm = observer(() => {
     const [files, setFiles] = useState([])
 
     const [compressFormVisible, setCompressFormVisible] = useState(false)
+    const [errorActive, setErrorActive] = useState(false)
+    const [alertText, setAlertText] = useState('')
 
     let formData = new FormData()
 
@@ -141,33 +144,80 @@ const AddCreateForm = observer(() => {
                                                                                             file1 = new File([result], `${result.name}`)
                                                                                             formData.append('img', file1);
                                                                                         },
-                                                                                        error(err) {
-                                                                                            console.log(err.message);
-                                                                                        },
+                                                                                        error(err) {},
                                                                                     })}
                                                                                 setCompressFormVisible(true)
                                                                                 setTimeout(() =>
                                                                                     createAdd(formData).then(data => setText('Объявление успешно размещено!'))
                                                                                     , 20000)
                                                                             }
-                                                                        } else {alert('Выберите хотя бы одно правило заселения')}
-                                                                    } else {alert('Введите ссылку на диск с видео')}
-                                                                } else {alert('Выберите тип парковки')}
-                                                            } else {alert('Выберите тип отопления')}
-                                                        } else {alert('Выберите тип ремонта')}
-                                                    } else {alert('Выберите количество комнат')}
-                                                } else {alert('Выберите этаж')}
-                                            } else {alert('Выберите тип здания')}
-                                        } else {alert('Выберите количество спальных мест')}
-                                    } else {alert('Вы не авторизованы. Критическая ошибка. Выйдите из профиля и зайдите снова чтобы ее устранить')}
-                                } else {alert('Введите площадь')}
-                            } else {alert('Введите цену')}
-                        } else {alert('Заполните описание')}
-                    } else {alert('Заполните адрес объекта')}
-                } else {alert('Заполните телефон для связи')}
-            } else {alert('Заполните название объявления')}
+                                                                        } else {
+                                                                            setAlertText('Выберите хотя бы одно правило заселения')
+                                                                            setErrorActive(true)
+                                                                        }
+                                                                    } else {
+                                                                        setAlertText('Введите ссылку на диск с видео')
+                                                                        setErrorActive(true)
+                                                                    }
+                                                                } else {
+                                                                    setAlertText('Выберите тип парковки')
+                                                                    setErrorActive(true)
+                                                                }
+                                                            } else {
+                                                                setAlertText('Выберите тип отопления')
+                                                                setErrorActive(true)
+                                                            }
+                                                        } else {
+                                                            setAlertText('Выберите тип ремонта')
+                                                            setErrorActive(true)
+                                                        }
+                                                    } else {
+                                                        setAlertText('Выберите количество комнат')
+                                                        setErrorActive(true)
+                                                    }
+                                                } else {
+                                                    setAlertText('Выберите этаж')
+                                                    setErrorActive(true)
+                                                }
+                                            } else {
+                                                setAlertText('Выберите тип здания')
+                                                setErrorActive(true)
+                                            }
+                                        } else {
+                                            setAlertText('Выберите количество спальных мест')
+                                            setErrorActive(true)
+                                        }
+                                    } else {
+                                        setAlertText('Вы не авторизованы. Критическая ошибка. Выйдите из профиля и зайдите снова чтобы ее устранить')
+                                        setErrorActive(true)
+                                    }
+                                } else {
+                                    setAlertText('Введите площадь')
+                                    setErrorActive(true)
+                                }
+                            } else {
+                                setAlertText('Введите цену')
+                                setErrorActive(true)
+                            }
+                        } else {
+                            setAlertText('Заполните описание')
+                            setErrorActive(true)
+                        }
+                    } else {
+                        setAlertText('Заполните адрес объекта')
+                        setErrorActive(true)
+                    }
+                } else {
+                    setAlertText('Заполните телефон для связи')
+                    setErrorActive(true)
+                }
+            } else {
+                setAlertText('Заполните название объявления')
+                setErrorActive(true)
+            }
         } else {
-            alert('Загрузите изображения!')
+            setAlertText('Загрузите изображения!')
+            setErrorActive(true)
         }
     }
 
@@ -187,10 +237,6 @@ const AddCreateForm = observer(() => {
 
         setDrag(false)
     }
-
-    /*
-
-    * */
 
     return (
         <Container>
@@ -516,6 +562,7 @@ const AddCreateForm = observer(() => {
                 </div>
             </div>
             <CompressForm show={compressFormVisible} text={text} onHide={() => setCompressFormVisible(false)}/>
+            <Error alert={alertText} show={errorActive} onHide={() => setErrorActive(false)}/>
         </Container>
     );
 });

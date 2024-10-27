@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import {observer} from "mobx-react-lite";
 import {sendSelectionMail} from "../../http/addApi";
 import {IMaskInput} from "react-imask";
+import Error from "./Error";
 
 const FormSelection = observer(({show, onHide}) => {
 
@@ -21,21 +22,56 @@ const FormSelection = observer(({show, onHide}) => {
     const [wishes, setWishes] = useState('')
     const [animal, setAnimal] = useState(false);
     const [inputKey, setInputKey] = useState(0);
+    const [errorActive, setErrorActive] = useState(false)
+    const [alertText, setAlertText] = useState('')
 
     const checkHandler = () => {
         setAnimal(!animal)
     }
 
     const sendForm = () => {
+        const form = document.getElementById('selection_form')
         try{
-            if (!name){alert('Заполните поле с именем')} else
-                if (!phone){alert('Введите Ваш телефон')} else
-                    if (!area){alert('Выберите район города')} else
-                        if (!firstDate){alert('Введите дату заезда')} else
-                            if (!lastDate){alert('Введите дату выезда')} else
-                                if (!peopleCount){alert('Введите количество людей')} else
-                                    if (!roomCount){alert('Введите количество комнат')} else
-                                        if (!budget){alert('Введите цену')} else {
+            if (!name){
+                form.style.display = 'none'
+                setAlertText('Заполните поле с именем')
+                setErrorActive(true)
+            } else
+                if (!phone){
+                    form.style.display = 'none'
+                    setAlertText('Введите Ваш телефон')
+                    setErrorActive(true)
+                } else
+                    if (!area){
+                        form.style.display = 'none'
+                        setAlertText('Выберите район города')
+                        setErrorActive(true)
+                    } else
+                        if (!firstDate){
+                            form.style.display = 'none'
+                            setAlertText('Введите дату заезда')
+                            setErrorActive(true)
+                        } else
+                            if (!lastDate){
+                                form.style.display = 'none'
+                                setAlertText('Введите дату выезда')
+                                setErrorActive(true)
+                            } else
+                                if (!peopleCount){
+                                    form.style.display = 'none'
+                                    setAlertText('Введите количество людей')
+                                    setErrorActive(true)
+                                } else
+                                    if (!roomCount){
+                                        form.style.display = 'none'
+                                        setAlertText('Введите количество комнат')
+                                        setErrorActive(true)
+                                    } else
+                                        if (!budget){
+                                            form.style.display = 'none'
+                                            setAlertText('Введите цену')
+                                            setErrorActive(true)
+                                        } else {
                                             const formData = new FormData()
                                             formData.append('name', name)
                                             formData.append('phone', phone)
@@ -52,7 +88,9 @@ const FormSelection = observer(({show, onHide}) => {
                                             setInputKey(inputKey + 1);
                                         }
         } catch (e) {
-            alert('Непредвиденнная ошибка')
+            form.style.display = 'none'
+            setAlertText('Непредвиденнная ошибка')
+            setErrorActive(true)
         }
     }
 
@@ -62,6 +100,7 @@ const FormSelection = observer(({show, onHide}) => {
             onHide = {onHide}
             size="md"
             centered
+            id="selection_form"
             key={inputKey}
         >
             {(inputKey === 1 ?
@@ -209,6 +248,7 @@ const FormSelection = observer(({show, onHide}) => {
                         </Modal.Footer>
                     </>
             )}
+            <Error mother={'1'} alert={alertText} show={errorActive} onHide={() => setErrorActive(false)}/>
         </Modal>
     );
 });

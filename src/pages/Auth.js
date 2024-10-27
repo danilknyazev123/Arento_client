@@ -9,6 +9,7 @@ import {login, registration} from "../http/userApi";
 import {observer} from "mobx-react-lite";
 import {Context} from "../index";
 import SuccessfulReg from "../components/modals/SuccessfulReg";
+import Error from "../components/modals/Error";
 
 const Auth = observer(() => {
     const {user} = useContext(Context)
@@ -22,8 +23,9 @@ const Auth = observer(() => {
     const [nickname, setNickname] = useState('')
     const [password, setPassword] = useState('')
     const [passwordRepeat, setPasswordRepeat] = useState('')
-
     const [passwordShow, setPasswordShow] = useState(1)
+    const [errorActive, setErrorActive] = useState(false)
+    const [alertText, setAlertText] = useState('')
 
     const click = async () => {
         try {
@@ -38,7 +40,8 @@ const Auth = observer(() => {
                         history.push(SHOP_ROUTE)
                     }
                 } else {
-                    alert('Введите электронную почту')
+                    setAlertText('Введите электронную почту')
+                    setErrorActive(true)
                 }
             } else {
                 const isChecked = document.getElementById('inline-checkbox-100').checked
@@ -51,17 +54,21 @@ const Auth = observer(() => {
                                 setFormSuccessfulReg(true)
                             }
                         } else {
-                            alert('Пароли не совпадают')
+                            setAlertText('Пароли не совпадают')
+                            setErrorActive(true)
                         }
                     } else {
-                        alert('Введите электронную почту')
+                        setAlertText('Введите электронную почту')
+                        setErrorActive(true)
                     }
                 } else {
-                    alert('Вы должны быть согласны с условиями Arento')
+                    setAlertText('Вы должны быть согласны с условиями Arento')
+                    setErrorActive(true)
                 }
             }
         } catch (e) {
-            alert('Непредвиденная ошибка')
+            setAlertText('Непредвиденная ошибка')
+            setErrorActive(true)
         }
     }
 
@@ -227,6 +234,7 @@ const Auth = observer(() => {
                     </Form>
                 </Card>
                 <SuccessfulReg show={formSuccessfulReg} onHide={() =>setFormSuccessfulReg(false)}/>
+                <Error alert={alertText} show={errorActive} onHide={() => setErrorActive(false)}/>
             </Container>
         );
     }

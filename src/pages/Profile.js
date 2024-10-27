@@ -79,15 +79,3 @@ const Profile = observer(() => {
 });
 
 export default Profile;
-/*
-                                {user.UserData.isPaidSelection ?
-                                    <Button className="m-1" disabled>Подбор оплачен</Button>
-                                    :
-                                    <Button
-                                        className="m-1"
-                                        onClick={payForSelection}
-                                    >
-                                        Оплатить подбор
-                                    </Button>
-                                }
-* */
