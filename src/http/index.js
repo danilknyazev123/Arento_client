@@ -25,7 +25,7 @@ const authInterceptor = config => {
     config.headers.append('Content-Type', 'application/json');
     config.headers.append('Accept', 'application/json');
 
-    config.headers.append('Access-Control-Allow-Origin', 'http://localhost:3000');
+    config.headers.append('Access-Control-Allow-Origin', 'http://89.108.109.209:9090');
     config.headers.append('Access-Control-Allow-Credentials', 'true');
 
     config.headers.append('GET', 'POST', 'OPTIONS');
