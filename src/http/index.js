@@ -1,17 +1,28 @@
 import axios from "axios";
 
 const $host = axios.create({
+    headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+        'Access-Control-Allow-Headers' : '*',
+    },
     withCredentials: true,
     baseURL: process.env.REACT_APP_API_URL
 })
 
 const $authHost = axios.create({
+    headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods' : 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+        'Access-Control-Allow-Headers' : '*',
+    },
     withCredentials: true,
     baseURL: process.env.REACT_APP_API_URL
 })
 
 const authInterceptor = config => {
     config.headers.authorization = `Bearer ${localStorage.getItem('token')}`
+    config.headers.common['Authorization'] = 'AUTH_TOKEN';
     return config
 }
 $authHost.interceptors.request.use(authInterceptor)
