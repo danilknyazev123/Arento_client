@@ -22,6 +22,13 @@ const $authHost = axios.create({
 
 const authInterceptor = config => {
     config.headers.authorization = `Bearer ${localStorage.getItem('token')}`
+    config.headers.append('Content-Type', 'application/json');
+    config.headers.append('Accept', 'application/json');
+
+    config.headers.append('Access-Control-Allow-Origin', 'http://localhost:3000');
+    config.headers.append('Access-Control-Allow-Credentials', 'true');
+
+    config.headers.append('GET', 'POST', 'OPTIONS');
     return config
 }
 $authHost.interceptors.request.use(authInterceptor)
